@@ -91,7 +91,7 @@ export default function HomePage() {
     // types of different greetings
     const typesOfGreetings = [
       <>
-        Congrats, you've welcomed a{" "}
+        Congrats, you&apos;ve welcomed a{" "}
         <span
           className={`${result.includes("Dog") || result.includes("Cat") ? "text-common" : result.includes("Rabbit") ? "text-uncommon" : result.includes("Tiger") ? "text-epic" : result.includes("Dragon") ? "text-legendary" : ""} font-bold`}
         >
@@ -127,7 +127,7 @@ export default function HomePage() {
         is now with you!
       </>,
       <>
-        Good for you, you've got a{" "}
+        Good for you, you&apos;ve got a{" "}
         <span
           className={`${result.includes("Dog") || result.includes("Cat") ? "text-common" : result.includes("Rabbit") ? "text-uncommon" : result.includes("Tiger") ? "text-epic" : result.includes("Dragon") ? "text-legendary" : ""} font-bold`}
         >
@@ -186,7 +186,9 @@ export default function HomePage() {
         {result ? (
           <div className="text-2xl">{getRandomString()}</div>
         ) : (
-          <div className="text-2xl">Click "Spin" to get your awesome pet</div>
+          <div className="text-2xl">
+            Click &quot;Spin&quot; to get your awesome pet
+          </div>
         )}
         <button
           type="button"
