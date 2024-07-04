@@ -4,11 +4,15 @@ A simulation of Egg Hatching of Pets inspired from Pet Simulator.
 
 ## Changelog
 
+### Version 0.9.0
+
+- feat: mobile responsive
+
 ### Version 0.8.1
 
 - fix: eslint errors
 
-### Version 0.8.0
+### Version 0.7.0
 
 - feat: every 5 spin, doubled the luck
 - feat: new pet 'Tiger'

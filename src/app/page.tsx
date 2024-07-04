@@ -154,28 +154,28 @@ export default function HomePage() {
       <div className="text-center text-4xl font-bold">Pets RNG game</div>
 
       {/* pets that can be earned */}
-      <div className="mt-8 flex justify-around">
-        <div className="flex flex-col items-center gap-2 rounded-md border border-common p-4">
+      <div className="mt-8 grid grid-cols-2 gap-2 md:grid-cols-5">
+        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border border-common p-4">
           <div className="font-semibold text-common">Common</div>
           <div>Cat: {rarityChance["Cat"]}%</div>
         </div>
 
-        <div className="flex flex-col items-center gap-2 rounded-md border border-common p-4">
+        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border border-common p-4">
           <div className="font-semibold text-common">Common</div>
           <div>Dog: {rarityChance["Dog"]}%</div>
         </div>
 
-        <div className="flex flex-col items-center gap-2 rounded-md border border-uncommon p-4">
+        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border border-uncommon p-4">
           <div className="font-semibold text-uncommon">Uncommon</div>
           <div>Rabbit: {rarityChance["Rabbit"]}%</div>
         </div>
 
-        <div className="border-epic flex flex-col items-center gap-2 rounded-md border p-4">
+        <div className="border-epic col-span-1 flex flex-col items-center gap-2 rounded-md border p-4">
           <div className="text-epic font-semibold">Epic</div>
           <div>Tiger: {rarityChance["Tiger"]}%</div>
         </div>
 
-        <div className="flex flex-col items-center gap-2 rounded-md border border-legendary p-4">
+        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border border-legendary p-4">
           <div className="font-semibold text-legendary">Legendary</div>
           <div>Dragon: {rarityChance["Dragon"]}%</div>
         </div>
@@ -184,7 +184,9 @@ export default function HomePage() {
       {/* spin */}
       <div className="mt-8 flex flex-col items-center justify-center gap-4">
         {result ? (
-          <div className="text-2xl">{getRandomString()}</div>
+          <div className="text-center text-lg md:text-2xl">
+            {getRandomString()}
+          </div>
         ) : (
           <div className="text-2xl">
             Click &quot;Spin&quot; to get your awesome pet
@@ -192,7 +194,7 @@ export default function HomePage() {
         )}
         <button
           type="button"
-          className={`flex h-12 w-32 items-center justify-center rounded-full text-xl text-black ${isLoading ? "bg-gray-400" : "bg-white"} `}
+          className={`flex h-12 w-32 items-center justify-center rounded-full text-black md:h-12 md:w-32 md:text-xl ${isLoading ? "bg-gray-400" : "bg-white"} `}
           onClick={debounce(() => handleResult(1, 100), 500)}
           disabled={isLoading}
         >
@@ -239,7 +241,7 @@ export default function HomePage() {
       <div className="mt-8">
         <div className="text-lg font-semibold">Pet Inventory</div>
 
-        <div className="mt-4 grid grid-cols-4 gap-2">
+        <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
           {petInventory.length ? (
             petInventory.map((pet, petIdx) => (
               <div
