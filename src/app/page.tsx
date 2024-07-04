@@ -6,6 +6,15 @@ export default function HomePage() {
   const [result, setResult] = useState("");
   const [petInventory, setPetInventory] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [increaseChance, setIncreaseChance] = useState(0);
+  const [rarityChance, setRarityChance] = useState({
+    Cat: 35,
+    Dog: 35,
+    Rabbit: 20,
+    Tiger: 8,
+    Dragon: 2,
+    Special: 1,
+  });
 
   const debounce = (fn: Function, ms: number) => {
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -24,20 +33,55 @@ export default function HomePage() {
   // Here is the function for getting a pet
   const handleResult = (min: number, max: number) => {
     const spinResult = Math.floor(Math.random() * (max - min + 1)) + min;
-    const specialTrait = Math.floor(Math.random() * (max - min)) + min;
+    const specialTrait = Math.floor(Math.random() * (max - min + 1)) + min;
+    let incrementChance = increaseChance + 1;
+    setIncreaseChance(incrementChance);
+
+    // Double the chance of getting higher rarity
+    if (incrementChance === 5) {
+      setRarityChance({
+        Cat: 20,
+        Dog: 20,
+        Rabbit: 40,
+        Tiger: 16,
+        Dragon: 4,
+        Special: 2,
+      });
+    } else {
+      if (incrementChance > 5) {
+        setIncreaseChance(0);
+      }
+      setRarityChance({
+        Cat: 35,
+        Dog: 35,
+        Rabbit: 20,
+        Tiger: 8,
+        Dragon: 2,
+        Special: 1,
+      });
+    }
 
     let newResult = "";
-    if (spinResult >= 96) {
+    let rarityDiff = 0;
+    if (spinResult >= (rarityDiff = 100 - rarityChance["Dragon"])) {
       newResult = "Dragon";
-    } else if (spinResult >= 80) {
+    } else if (
+      spinResult >= (rarityDiff = rarityDiff - rarityChance["Tiger"])
+    ) {
+      newResult = "Tiger";
+    } else if (
+      spinResult >= (rarityDiff = rarityDiff - rarityChance["Rabbit"])
+    ) {
       newResult = "Rabbit";
-    } else if (spinResult >= 40) {
+    } else if (spinResult >= (rarityDiff = rarityDiff - rarityChance["Dog"])) {
       newResult = "Dog";
     } else {
       newResult = "Cat";
     }
 
-    if (specialTrait === 1) newResult = "Special " + newResult;
+    if (specialTrait === rarityChance["Special"])
+      newResult = "Special " + newResult;
+
     // Update state with the new result
     setResult(newResult);
     setPetInventory((prevHistory) => [newResult, ...prevHistory]);
@@ -49,7 +93,7 @@ export default function HomePage() {
       <>
         Congrats, you've welcomed a{" "}
         <span
-          className={`${result === "Dog" || result === "Cat" ? "text-common" : result === "Rabbit" ? "text-uncommon" : result === "Dragon" ? "text-legendary" : ""} font-bold`}
+          className={`${result.includes("Dog") || result.includes("Cat") ? "text-common" : result.includes("Rabbit") ? "text-uncommon" : result.includes("Tiger") ? "text-epic" : result.includes("Dragon") ? "text-legendary" : ""} font-bold`}
         >
           {result}
         </span>
@@ -58,7 +102,7 @@ export default function HomePage() {
       <>
         Amazing, a{" "}
         <span
-          className={`${result === "Dog" || result === "Cat" ? "text-common" : result === "Rabbit" ? "text-uncommon" : result === "Dragon" ? "text-legendary" : ""} font-bold`}
+          className={`${result.includes("Dog") || result.includes("Cat") ? "text-common" : result.includes("Rabbit") ? "text-uncommon" : result.includes("Tiger") ? "text-epic" : result.includes("Dragon") ? "text-legendary" : ""} font-bold`}
         >
           {result}
         </span>{" "}
@@ -67,7 +111,7 @@ export default function HomePage() {
       <>
         Bravo, a{" "}
         <span
-          className={`${result === "Dog" || result === "Cat" ? "text-common" : result === "Rabbit" ? "text-uncommon" : result === "Dragon" ? "text-legendary" : ""} font-bold`}
+          className={`${result.includes("Dog") || result.includes("Cat") ? "text-common" : result.includes("Rabbit") ? "text-uncommon" : result.includes("Tiger") ? "text-epic" : result.includes("Dragon") ? "text-legendary" : ""} font-bold`}
         >
           {result}
         </span>{" "}
@@ -76,7 +120,7 @@ export default function HomePage() {
       <>
         Hello, a{" "}
         <span
-          className={`${result === "Dog" || result === "Cat" ? "text-common" : result === "Rabbit" ? "text-uncommon" : result === "Dragon" ? "text-legendary" : ""} font-bold`}
+          className={`${result.includes("Dog") || result.includes("Cat") ? "text-common" : result.includes("Rabbit") ? "text-uncommon" : result.includes("Tiger") ? "text-epic" : result.includes("Dragon") ? "text-legendary" : ""} font-bold`}
         >
           {result}
         </span>{" "}
@@ -85,7 +129,7 @@ export default function HomePage() {
       <>
         Good for you, you've got a{" "}
         <span
-          className={`${result === "Dog" || result === "Cat" ? "text-common" : result === "Rabbit" ? "text-uncommon" : result === "Dragon" ? "text-legendary" : ""} font-bold`}
+          className={`${result.includes("Dog") || result.includes("Cat") ? "text-common" : result.includes("Rabbit") ? "text-uncommon" : result.includes("Tiger") ? "text-epic" : result.includes("Dragon") ? "text-legendary" : ""} font-bold`}
         >
           {result}
         </span>
@@ -111,24 +155,29 @@ export default function HomePage() {
 
       {/* pets that can be earned */}
       <div className="mt-8 flex justify-around">
-        <div className="flex flex-col gap-2 rounded-md border border-common p-4">
+        <div className="flex flex-col items-center gap-2 rounded-md border border-common p-4">
           <div className="font-semibold text-common">Common</div>
-          <div>Cat: 40%</div>
+          <div>Cat: {rarityChance["Cat"]}%</div>
         </div>
 
-        <div className="flex flex-col gap-2 rounded-md border border-common p-4">
+        <div className="flex flex-col items-center gap-2 rounded-md border border-common p-4">
           <div className="font-semibold text-common">Common</div>
-          <div>Dog: 40%</div>
+          <div>Dog: {rarityChance["Dog"]}%</div>
         </div>
 
-        <div className="flex flex-col gap-2 rounded-md border border-uncommon p-4">
+        <div className="flex flex-col items-center gap-2 rounded-md border border-uncommon p-4">
           <div className="font-semibold text-uncommon">Uncommon</div>
-          <div>Rabbit: 16%</div>
+          <div>Rabbit: {rarityChance["Rabbit"]}%</div>
         </div>
 
-        <div className="flex flex-col gap-2 rounded-md border border-legendary p-4">
+        <div className="border-epic flex flex-col items-center gap-2 rounded-md border p-4">
+          <div className="text-epic font-semibold">Epic</div>
+          <div>Tiger: {rarityChance["Tiger"]}%</div>
+        </div>
+
+        <div className="flex flex-col items-center gap-2 rounded-md border border-legendary p-4">
           <div className="font-semibold text-legendary">Legendary</div>
-          <div>Dragon: 4%</div>
+          <div>Dragon: {rarityChance["Dragon"]}%</div>
         </div>
       </div>
 
@@ -169,33 +218,54 @@ export default function HomePage() {
             <div>Spin</div>
           )}
         </button>
+
+        {/* Lucky boost */}
+        {increaseChance === 5 ? (
+          <div className="text-xs font-light">
+            Your next spin is{" "}
+            <span className="font-semibold uppercase">doubled</span> your luck.
+          </div>
+        ) : (
+          <div className="text-xs font-light">
+            Spin <span className="font-semibold">{5 - increaseChance}</span>{" "}
+            more to double your luck.
+          </div>
+        )}
       </div>
 
       {/* Pet Inventory */}
       <div className="mt-8">
         <div className="text-lg font-semibold">Pet Inventory</div>
 
-        <div className="grid grid-cols-4 gap-2">
-          {petInventory.map((pet, petIdx) => (
-            <div
-              key={petIdx}
-              className={`${
-                pet.includes("Dog") || pet.includes("Cat")
-                  ? "border-common"
-                  : pet.includes("Rabbit")
-                    ? "border-uncommon"
-                    : pet.includes("Dragon")
-                      ? "border-legendary"
-                      : ""
-              } col-span-1 border p-2 text-lg`}
-            >
+        <div className="mt-4 grid grid-cols-4 gap-2">
+          {petInventory.length ? (
+            petInventory.map((pet, petIdx) => (
               <div
-                className={`${pet.includes("Special") ? "font-bold italic" : ""} text-center`}
+                key={petIdx}
+                className={`${
+                  pet.includes("Dog") || pet.includes("Cat")
+                    ? "border-common"
+                    : pet.includes("Rabbit")
+                      ? "border-uncommon"
+                      : pet.includes("Tiger")
+                        ? "border-epic"
+                        : pet.includes("Dragon")
+                          ? "border-legendary"
+                          : ""
+                } col-span-1 rounded-full border p-2 text-lg`}
               >
-                {pet}
+                <div
+                  className={`${pet.includes("Special") ? "font-bold italic" : ""} text-center`}
+                >
+                  {pet}
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="col-span-4 text-center font-light">
+              Your pet inventory is empty.
             </div>
-          ))}
+          )}
         </div>
       </div>
     </main>

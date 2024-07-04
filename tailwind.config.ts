@@ -16,6 +16,7 @@ const config: Config = {
       colors: {
         common: "#1eff00",
         uncommon: "#0070dd",
+        epic: "#a335ee",
         legendary: "#ff8000",
       },
     },
