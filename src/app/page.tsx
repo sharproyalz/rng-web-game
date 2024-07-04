@@ -149,7 +149,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="mx-auto h-[100vh] max-w-screen-lg px-4 py-8">
+    <main className="mx-auto max-w-screen-lg px-4 py-8">
       {/* title */}
       <div className="text-center text-4xl font-bold">Pets RNG game</div>
 
@@ -188,7 +188,7 @@ export default function HomePage() {
             {getRandomString()}
           </div>
         ) : (
-          <div className="text-2xl">
+          <div className="text-center text-lg md:text-2xl">
             Click &quot;Spin&quot; to get your awesome pet
           </div>
         )}

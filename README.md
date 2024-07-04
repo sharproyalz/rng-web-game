@@ -7,6 +7,7 @@ A simulation of Egg Hatching of Pets inspired from Pet Simulator.
 ### Version 0.9.0
 
 - feat: mobile responsive
+- chore: disable lightmode
 
 ### Version 0.8.1
 
