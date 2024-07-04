@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 
 export default function HomePage() {
   const [result, setResult] = useState("");
-  const [spinHistory, setSpinHistory] = useState<string[]>([]);
+  const [petInventory, setPetInventory] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const debounce = (fn: Function, ms: number) => {
@@ -24,6 +24,7 @@ export default function HomePage() {
   // Here is the function for getting a pet
   const handleResult = (min: number, max: number) => {
     const spinResult = Math.floor(Math.random() * (max - min + 1)) + min;
+    const specialTrait = Math.floor(Math.random() * (max - min)) + min;
 
     let newResult = "";
     if (spinResult >= 96) {
@@ -36,11 +37,10 @@ export default function HomePage() {
       newResult = "Cat";
     }
 
+    if (specialTrait === 1) newResult = "Special " + newResult;
     // Update state with the new result
     setResult(newResult);
-    setSpinHistory((prevHistory) => [newResult, ...prevHistory]);
-
-    console.log(result);
+    setPetInventory((prevHistory) => [newResult, ...prevHistory]);
   };
 
   function getRandomString() {
@@ -111,23 +111,23 @@ export default function HomePage() {
 
       {/* pets that can be earned */}
       <div className="mt-8 flex justify-around">
-        <div className="border-common flex flex-col gap-2 rounded-md border p-4">
-          <div className="text-common font-semibold">Common</div>
+        <div className="flex flex-col gap-2 rounded-md border border-common p-4">
+          <div className="font-semibold text-common">Common</div>
           <div>Cat: 40%</div>
         </div>
 
-        <div className="border-common flex flex-col gap-2 rounded-md border p-4">
-          <div className="text-common font-semibold">Common</div>
+        <div className="flex flex-col gap-2 rounded-md border border-common p-4">
+          <div className="font-semibold text-common">Common</div>
           <div>Dog: 40%</div>
         </div>
 
-        <div className="border-uncommon flex flex-col gap-2 rounded-md border p-4">
-          <div className="text-uncommon font-semibold">Uncommon</div>
+        <div className="flex flex-col gap-2 rounded-md border border-uncommon p-4">
+          <div className="font-semibold text-uncommon">Uncommon</div>
           <div>Rabbit: 16%</div>
         </div>
 
-        <div className="border-legendary flex flex-col gap-2 rounded-md border p-4">
-          <div className="text-legendary font-semibold">Legendary</div>
+        <div className="flex flex-col gap-2 rounded-md border border-legendary p-4">
+          <div className="font-semibold text-legendary">Legendary</div>
           <div>Dragon: 4%</div>
         </div>
       </div>
@@ -171,17 +171,29 @@ export default function HomePage() {
         </button>
       </div>
 
-      {/* spin history */}
+      {/* Pet Inventory */}
       <div className="mt-8">
-        <div className="text-lg font-semibold">Spin History</div>
+        <div className="text-lg font-semibold">Pet Inventory</div>
 
-        <div className="flex flex-col gap-2">
-          {spinHistory.map((spin, spinIdx) => (
+        <div className="grid grid-cols-4 gap-2">
+          {petInventory.map((pet, petIdx) => (
             <div
-              key={spinIdx}
-              className={`${spin === "Dog" || spin === "Cat" ? "border-common" : spin === "Rabbit" ? "border-uncommon" : spin === "Dragon" ? "border-legendary" : ""} border p-2 text-lg`}
+              key={petIdx}
+              className={`${
+                pet.includes("Dog") || pet.includes("Cat")
+                  ? "border-common"
+                  : pet.includes("Rabbit")
+                    ? "border-uncommon"
+                    : pet.includes("Dragon")
+                      ? "border-legendary"
+                      : ""
+              } col-span-1 border p-2 text-lg`}
             >
-              <div>{spin}</div>
+              <div
+                className={`${pet.includes("Special") ? "font-bold italic" : ""} text-center`}
+              >
+                {pet}
+              </div>
             </div>
           ))}
         </div>
