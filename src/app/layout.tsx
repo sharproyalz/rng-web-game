@@ -17,7 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>{children}</body>
+      <body
+        className={`${inter.className} bg-gradient-to-bl from-[#f57b7a] to-[#f57b7a]`}
+        style={{ fontFamily: "Pixelify Sans, sans-serif" }}
+      >
+        {children}
+      </body>
     </html>
   );
 }

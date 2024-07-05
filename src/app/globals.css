@@ -1,12 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* currently in darkmode */
+/* currently in darkmode  */
 :root {
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
   --background-end-rgb: 0, 0, 0;
+  font-family: 'Pixelify Sans', sans-serif;
+
+}
+
+body {
+  background-image: url('/public/pet-bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Pixelify Sans', sans-serif;
 }
 
 /* :root {
@@ -33,5 +44,39 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+#big-cloud {
+  animation-name: big-clouds;
+  animation-duration: 48s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+#small-cloud {
+  animation-name: small-clouds;
+  animation-duration: 36s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes small-clouds {
+  from {
+    right: -300px;
+  }
+
+  to {
+    right: 100vw;
+  }
+}
+
+@keyframes big-clouds {
+  from {
+    right: -200px;
+  }
+
+  to {
+    right: 100vw;
   }
 }

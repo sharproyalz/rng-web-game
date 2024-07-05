@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 
 export default function HomePage() {
@@ -144,57 +145,57 @@ export default function HomePage() {
     if (!isLoading) {
       return typesOfGreetings[randomIndex];
     } else {
-      return "Spinning...";
+      return "Hatching...";
     }
   }
 
   return (
-    <main className="mx-auto max-w-screen-lg px-4 py-8">
+    <main className="mx-auto min-h-[100vh] max-w-screen-lg px-4 py-4">
       {/* title */}
       <div className="text-center text-4xl font-bold">Pets RNG game</div>
 
       {/* pets that can be earned */}
-      <div className="mt-8 grid grid-cols-2 gap-2 md:grid-cols-5">
-        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border border-common p-4">
+      <div className="mt-8 grid grid-cols-2 gap-2 rounded-lg border-2 border-black bg-white p-2 md:grid-cols-5">
+        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md p-4 text-black">
           <div className="font-semibold text-common">Common</div>
           <div>Cat: {rarityChance["Cat"]}%</div>
         </div>
 
-        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border border-common p-4">
+        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md p-4 text-black">
           <div className="font-semibold text-common">Common</div>
           <div>Dog: {rarityChance["Dog"]}%</div>
         </div>
 
-        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border border-uncommon p-4">
+        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md p-4 text-black">
           <div className="font-semibold text-uncommon">Uncommon</div>
           <div>Rabbit: {rarityChance["Rabbit"]}%</div>
         </div>
 
-        <div className="border-epic col-span-1 flex flex-col items-center gap-2 rounded-md border p-4">
-          <div className="text-epic font-semibold">Epic</div>
+        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border-epic p-4 text-black">
+          <div className="font-semibold text-epic">Epic</div>
           <div>Tiger: {rarityChance["Tiger"]}%</div>
         </div>
 
-        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border border-legendary p-4">
+        <div className="col-span-1 flex flex-col items-center gap-2 rounded-md border-legendary p-4 text-black">
           <div className="font-semibold text-legendary">Legendary</div>
           <div>Dragon: {rarityChance["Dragon"]}%</div>
         </div>
       </div>
 
-      {/* spin */}
-      <div className="mt-8 flex flex-col items-center justify-center gap-4">
+      {/* hatch */}
+      <div className="mt-8 flex flex-col items-center justify-center gap-4 rounded-lg border-2 border-black bg-white p-2">
         {result ? (
-          <div className="text-center text-lg md:text-2xl">
+          <div className="text-center text-lg text-black md:text-2xl">
             {getRandomString()}
           </div>
         ) : (
-          <div className="text-center text-lg md:text-2xl">
-            Click &quot;Spin&quot; to get your awesome pet
+          <div className="text-center text-lg text-black md:text-2xl">
+            Click &quot;Hatch&quot; to get your awesome pet
           </div>
         )}
         <button
           type="button"
-          className={`flex h-12 w-32 items-center justify-center rounded-full text-black md:h-12 md:w-32 md:text-xl ${isLoading ? "bg-gray-400" : "bg-white"} `}
+          className={`flex h-12 w-32 items-center justify-center rounded-full border-2 border-black text-black md:h-12 md:w-32 md:text-xl ${isLoading ? "bg-gray-400" : "bg-white"} `}
           onClick={debounce(() => handleResult(1, 100), 500)}
           disabled={isLoading}
         >
@@ -219,27 +220,33 @@ export default function HomePage() {
               <span className="sr-only">Loading...</span>
             </div>
           ) : (
-            <div>Spin</div>
+            <div>Hatch</div>
           )}
         </button>
 
         {/* Lucky boost */}
         {increaseChance === 5 ? (
-          <div className="text-xs font-light">
-            Your next spin is{" "}
+          <div className="text-xs font-light text-black">
+            Your next hatch is{" "}
             <span className="font-semibold uppercase">doubled</span> your luck.
           </div>
         ) : (
-          <div className="text-xs font-light">
-            Spin <span className="font-semibold">{5 - increaseChance}</span>{" "}
+          <div className="text-xs font-light text-black">
+            Hatch <span className="font-semibold">{5 - increaseChance}</span>{" "}
             more to double your luck.
           </div>
         )}
       </div>
 
       {/* Pet Inventory */}
-      <div className="mt-8">
-        <div className="text-lg font-semibold">Pet Inventory</div>
+      <div className="relative mt-8 h-48 overflow-auto rounded-lg border-2 border-black bg-white px-2 pb-2">
+        <div className="sticky top-0 flex w-full justify-between bg-white p-2 text-lg font-semibold text-black">
+          <div className="">Pet Inventory</div>
+          <div className="">
+            {petInventory.length}
+            <span className="font-light"> pet(s)</span>
+          </div>
+        </div>
 
         <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
           {petInventory.length ? (
@@ -248,15 +255,15 @@ export default function HomePage() {
                 key={petIdx}
                 className={`${
                   pet.includes("Dog") || pet.includes("Cat")
-                    ? "border-common"
+                    ? "text-common"
                     : pet.includes("Rabbit")
-                      ? "border-uncommon"
+                      ? "text-uncommon"
                       : pet.includes("Tiger")
-                        ? "border-epic"
+                        ? "text-epic"
                         : pet.includes("Dragon")
-                          ? "border-legendary"
+                          ? "text-legendary"
                           : ""
-                } col-span-1 rounded-full border p-2 text-lg`}
+                } col-span-1 rounded-full border border-black p-2 text-lg text-black`}
               >
                 <div
                   className={`${pet.includes("Special") ? "font-bold italic" : ""} text-center`}
@@ -266,12 +273,30 @@ export default function HomePage() {
               </div>
             ))
           ) : (
-            <div className="col-span-4 text-center font-light">
+            <div className="col-span-4 text-center font-light text-black">
               Your pet inventory is empty.
             </div>
           )}
         </div>
       </div>
+
+      <Image
+        id="small-cloud"
+        src={"/cloud.webp"}
+        alt="Pixel Cloud"
+        height={100}
+        width={100}
+        className="absolute top-2 -z-10"
+      />
+
+      <Image
+        id="big-cloud"
+        src={"/cloud.webp"}
+        alt="Pixel Cloud"
+        height={160}
+        width={160}
+        className="absolute top-2 -z-10"
+      />
     </main>
   );
 }
