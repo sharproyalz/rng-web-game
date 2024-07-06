@@ -4,6 +4,10 @@ A simulation of Egg Hatching of Pets inspired from Pet Simulator.
 
 ## Changelog
 
+### 0.14.1
+
+- fix: cloud bug
+
 ### 0.11.0
 
 - refactor: 'Spin' changed to 'Hatch'

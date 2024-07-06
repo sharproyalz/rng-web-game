@@ -39,6 +39,7 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  overflow: hidden;
 }
 
 @layer utilities {
@@ -49,14 +50,14 @@ body {
 
 #big-cloud {
   animation-name: big-clouds;
-  animation-duration: 48s;
+  animation-duration: 36s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
 
 #small-cloud {
   animation-name: small-clouds;
-  animation-duration: 36s;
+  animation-duration: 48s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
