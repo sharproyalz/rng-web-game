@@ -156,7 +156,7 @@ export default function HomePage() {
 
   const playAudio = () => {
     if (audioRef.current) {
-      audioRef.current.defaultPlaybackRate = 1000;
+      audioRef.current.playbackRate = 1.25;
       audioRef.current.play();
     }
   };

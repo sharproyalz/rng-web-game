@@ -11,7 +11,7 @@ A simulation of Egg Hatching of Pets inspired from Pet Simulator.
 - chore: put a footer
 - chore: add a hatching sound
 
-### 0.14.1
+### 0.15.1
 
 - fix: cloud bug
 
@@ -20,6 +20,7 @@ A simulation of Egg Hatching of Pets inspired from Pet Simulator.
 - refactor: 'Spin' changed to 'Hatch'
 - chore: add background color
 - chore: improve UI
+- chore add a quest.
 
 ### Version 0.9.0
 
