@@ -39,7 +39,6 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-  overflow: hidden;
 }
 
 @layer utilities {
@@ -62,22 +61,28 @@ body {
   animation-iteration-count: infinite;
 }
 
-@keyframes small-clouds {
-  from {
-    right: -300px;
+@media (min-width: 1000px) {
+  body {
+    overflow: hidden;
   }
 
-  to {
-    right: 100vw;
-  }
-}
+  @keyframes small-clouds {
+    from {
+      right: -300px;
+    }
 
-@keyframes big-clouds {
-  from {
-    right: -200px;
+    to {
+      right: 100vw;
+    }
   }
 
-  to {
-    right: 100vw;
+  @keyframes big-clouds {
+    from {
+      right: -200px;
+    }
+
+    to {
+      right: 100vw;
+    }
   }
 }

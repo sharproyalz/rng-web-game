@@ -4,6 +4,12 @@ A simulation of Egg Hatching of Pets inspired from Pet Simulator.
 
 ## Changelog
 
+### 1.0.0
+
+- chore: add border to hatched pet
+- chore: switch quest and hatch section in mobile view
+- chore: footer
+
 ### 0.14.1
 
 - fix: cloud bug
