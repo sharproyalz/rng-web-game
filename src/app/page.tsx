@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 export default function HomePage() {
   const [result, setResult] = useState("");
   const [petInventory, setPetInventory] = useState<string[]>([]);
+  const [isHatching, setIsHatching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [increaseChance, setIncreaseChance] = useState(0);
   const [rarityChance, setRarityChance] = useState({
@@ -23,6 +24,7 @@ export default function HomePage() {
     return function (this: any, ...args: any[]) {
       setIsLoading(true); // set loading to true
       clearTimeout(timeoutId);
+      playAudio();
 
       timeoutId = setTimeout(() => {
         setIsLoading(false);
@@ -31,7 +33,7 @@ export default function HomePage() {
     };
   };
 
-  // Here is the function for getting a pet
+  // function for getting a pet
   const handleResult = (min: number, max: number) => {
     const spinResult = Math.floor(Math.random() * (max - min + 1)) + min;
     const specialTrait = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -88,6 +90,7 @@ export default function HomePage() {
     setPetInventory((prevHistory) => [newResult, ...prevHistory]);
   };
 
+  // get random greetings
   function getRandomString() {
     // types of different greetings
     const typesOfGreetings = [
@@ -149,6 +152,15 @@ export default function HomePage() {
     }
   }
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const playAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.defaultPlaybackRate = 1000;
+      audioRef.current.play();
+    }
+  };
+
   return (
     // container
     <main className="mx-auto min-h-[100vh] max-w-screen-lg px-4 py-4">
@@ -193,6 +205,7 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* quest and hatch */}
       <div className="mt-8 grid grid-cols-1 gap-2 md:grid-cols-2">
         {/* Quest */}
         <div className="order-2 col-span-1 rounded-lg border-2 border-black bg-white p-2 text-black md:order-1">
@@ -225,6 +238,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
         {/* hatch */}
         <div className="order-1 col-span-1 flex flex-col items-center justify-center gap-4 rounded-lg border-2 border-black bg-white p-2 md:order-2">
           {result ? (
@@ -239,7 +253,7 @@ export default function HomePage() {
           <button
             type="button"
             className={`flex h-12 w-32 items-center justify-center rounded-full border-2 border-black text-black md:h-12 md:w-32 md:text-xl ${isLoading ? "bg-gray-400" : "bg-white"} `}
-            onClick={debounce(() => handleResult(1, 100), 500)}
+            onClick={debounce(() => handleResult(1, 100), 1000)}
             disabled={isLoading}
           >
             {isLoading ? (
@@ -281,6 +295,15 @@ export default function HomePage() {
             </div>
           )}
         </div>
+
+        {/* hatching sounds */}
+        <audio
+          id="myAudio"
+          ref={audioRef}
+          src="/sounds/egg-crack.wav"
+          controls
+          className="hidden"
+        ></audio>
       </div>
 
       {/* Pet Inventory */}
